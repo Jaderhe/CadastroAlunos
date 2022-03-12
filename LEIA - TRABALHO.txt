@@ -1,0 +1,13 @@
+Aluno: Pronto
+
+Professor: Nome, CPF
+
+Disciplina: Nome, Carga Horária
+
+
+
+Turma: Disciplinas, Alunos, Regime (Semestral/anual)
+
+Frequência: Turma (pos Web), Disciplina (adnroid), Aluno, Data, status (presente/ausente) = size (15) whre presente = >= 70%
+
+

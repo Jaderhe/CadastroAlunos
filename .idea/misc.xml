@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Projetos/CadastroAlunos/app/src/main/res/layout/activity_cadastro_professor.xml" value="0.17074275362318841" />
         <entry key="..\:/Android/Projetos/CadastroAlunos/app/src/main/res/menu/menu_cadastro.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_cadastro_aluno.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_lista_aluno.xml" value="0.2578125" />
