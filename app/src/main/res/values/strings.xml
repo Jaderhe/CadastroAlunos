@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">CadastroAlunos</string>
+    <string name="ra">Ra</string>
+    <string name="nome">Nome</string>
+    <string name="cpf">CPF</string>
+    <string name="dtNasc">Dt. Nascimento</string>
+    <string name="dtMatricula">Dt. Matricula</string>
+    <string name="cursos">Cursos</string>
+    <string name="periodo">Período</string>
+    <string name="selecioneCurso">Selecione o Curso</string>
+    <string name="selecionePeriodo">Selecione o Período</string>
+    <string name="limpar">Limpar</string>
+    <string name="salvar">Salvar</string>
+    <string name="curso">Curso</string>
+    <string name="addAluno">Adicionar Aluno</string>
+    <string name="Alunos">Alunos</string>
+    <string name="Professores">Professores</string>
+    <string name="Disciplinas">Disciplinas</string>
+    <string name="Turmas">Turmas</string>
+    <string name="Frequências">Lançamento de Frequências</string>
+    <string name="Notas">Lançamento de Notas</string>
+    <string name="Resultado">Resultados</string>
+    <string name="MainTitle">Unipar - Pós Web e Mobile - Android</string>
+    <string name="AlunoTitle">Módulo Aluno - Lista</string>
+    <string name="CadAlunoTitle">Módulo Aluno - Cadastrar</string>
+    <string name="ProfTitle">Módulo Professor</string>
+</resources>
