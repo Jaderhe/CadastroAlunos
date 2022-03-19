@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lnLista"
+    android:id="@+id/listaTurmas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListaAlunoActivity">
+    tools:context=".ListaTurmaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvListaAlunos"
+        android:id="@+id/rvListaTurmas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp" />
-
 </LinearLayout>

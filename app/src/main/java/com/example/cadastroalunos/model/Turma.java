@@ -1,9 +1,8 @@
 package com.example.cadastroalunos.model;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
 
-import java.util.Objects;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,13 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class Professor extends SugarRecord {
+public class Turma extends SugarRecord {
 
-    private String nome;
-    private String cpf;
-
-    @Override
-    public String toString() {
-        return nome;
-    }
+    String nome;
+    List<Disciplina> disciplinas;
+    List<Aluno> alunos;
 }

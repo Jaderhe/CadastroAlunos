@@ -24,4 +24,13 @@
     <string name="AlunoTitle">Módulo Aluno - Lista</string>
     <string name="CadAlunoTitle">Módulo Aluno - Cadastrar</string>
     <string name="ProfTitle">Módulo Professor</string>
+    <string name="DisciplinaTitle">Módulo Disciplina</string>
+    <string name="CadDisciplinaTitle">Módulo Disciplina - Cadastrar</string>
+    <string name="cargaHoraria">Carga Horária</string>
+    <string name="selecioneProfessor">Selecione o Professor</string>
+    <string name="professor">Professor</string>
+    <string name="disciplina">Disciplina</string>
+    <string name="CadProfTitle">Módulo Professor - Cadastrar</string>
+    <string name="CadTurmaTitle">Módulo Turma - Cadastrar</string>
+    <string name="TurmaTitle">Módulo Turma</string>
 </resources>

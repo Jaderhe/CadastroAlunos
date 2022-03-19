@@ -11,6 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
+            android:name=".ListaTurmaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CadastroTurmaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaDisciplinasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CadastroDisciplinaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaProfessorActivity"
+            android:exported="false" />
+        <activity
             android:name=".CadastroProfessorActivity"
             android:exported="false" />
         <activity
@@ -40,7 +55,7 @@
             android:value="cadastro_aluno.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="3" />
     </application>
 
 </manifest>

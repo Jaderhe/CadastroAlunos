@@ -1,57 +1,51 @@
 package com.example.cadastroalunos;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.widget.LinearLayout;
 
+import com.example.cadastroalunos.dao.SugarDAO;
+import com.example.cadastroalunos.model.Professor;
 import com.example.cadastroalunos.util.CpfMask;
+import com.example.cadastroalunos.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class CadastroProfessorActivity extends AppCompatActivity {
+import java.util.Arrays;
+
+public class CadastroProfessorActivity extends BaseActivity {
 
     private TextInputEditText edNomeProfessor;
     private TextInputEditText edCpfProfessor;
+    private LinearLayout lnProfessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.ProfTitle);
+        setTitle(R.string.CadProfTitle);
         setContentView(R.layout.activity_cadastro_professor);
-
         loadComponents();
-
         edCpfProfessor.addTextChangedListener(CpfMask.insert(edCpfProfessor));
     }
 
-    private void loadComponents() {
+    void loadComponents() {
         edNomeProfessor = findViewById(R.id.edNomeProfessor);
         edCpfProfessor = findViewById(R.id.edCpfProfessor);
+        lnProfessor = findViewById(R.id.lnProfessor);
+        inputs = Arrays.asList(edCpfProfessor, edNomeProfessor);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflaterMenu = getMenuInflater();
-        inflaterMenu.inflate(R.menu.menu_cadastro, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.mn_limpar:
-                //TODO: adicionar método  de limpar dados
-                //limparCampos();
-                return true;
-            case R.id.mn_salvar:
-                //TODO: adicionar método  de salvar dados
-                //validaCampos();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    void salvar() {
+        Professor professor = Professor
+                .builder()
+                .cpf(edCpfProfessor.getText().toString().trim())
+                .nome(edNomeProfessor.getText().toString().trim())
+                .build();
+        if (SugarDAO.salvar(professor) > 0) {
+            setResult(RESULT_OK);
+            finish();
+        } else
+            Util.customSnackBar(lnProfessor, "Erro ao salvar o Professor (" + professor.getNome() + ") " +
+                    "verifique o log", 0);
+
     }
 }
