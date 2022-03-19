@@ -1,0 +1,13 @@
+Com base no projeto "Cadastro Aluno"
+Desenvolver um app p controle de notas e frequências
+Deverá conter as seguintes funcionalidades:
+- Cadastro de Aluno
+- Cadastro de Professores
+- Cadastro de Disciplinas
+- Cadastro de Turmas
+- Lançamento de Notas (selecionar se é regime anual ou semestral)
+- Lançamento de frequências
+- Exibir se o Aluno está aprovado ou não (média 60 - 70% frequência)
+
+Layout Livre
+Entregar até 27/03 23:59
