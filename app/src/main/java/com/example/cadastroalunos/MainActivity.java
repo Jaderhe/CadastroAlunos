@@ -39,5 +39,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void moduloAlunoTurma(View view) {
+        Intent intent = new Intent(this, CadastroAlunoTurmaActivity.class);
+        startActivity(intent);
+    }
+
 
 }

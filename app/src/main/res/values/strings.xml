@@ -33,4 +33,7 @@
     <string name="CadProfTitle">Módulo Professor - Cadastrar</string>
     <string name="CadTurmaTitle">Módulo Turma - Cadastrar</string>
     <string name="TurmaTitle">Módulo Turma</string>
+    <string name="selecioneTurma">Selecione uma Turma</string>
+    <string name="Turma">Turma</string>
+    <string name="AlunoTurma">Aluno Turma</string>
 </resources>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <!--
 
@@ -21,46 +21,46 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Alunos"
-        android:onClick="moduloAluno"/>
+        android:onClick="moduloAluno"
+        android:text="@string/Alunos" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Professores"
         android:onClick="moduloProfessor"
-        />
+        android:text="@string/Professores" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Disciplinas"
         android:onClick="moduloDisciplina"
-        />
+        android:text="@string/Disciplinas" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Turmas"
         android:onClick="moduloTurma"
-        />
+        android:text="@string/Turmas" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Notas"
-        />
+        android:onClick="moduloAlunoTurma"
+        android:text="@string/AlunoTurma" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Frequências"
-        />
+        android:text="@string/Notas" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Resultado"
-        />
+        android:text="@string/Frequências" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Resultado" />
 
 </LinearLayout>
