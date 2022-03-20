@@ -1,12 +1,14 @@
 package com.example.cadastroalunos.model;
 
+import static java.util.Objects.nonNull;
+
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.cadastroalunos.dao.SugarDAO;
 import com.orm.SugarRecord;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,32 +16,57 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString
 @Builder
 public class Turma extends SugarRecord {
 
     String nome;
     @Builder.Default
+    @ToString.Exclude
     List<Disciplina> disciplinas = new ArrayList<>();
     @Builder.Default
-    List<Aluno> alunos = new ArrayList<>();
+    @ToString.Exclude
+
+    List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void adicionaAluno(Aluno aluno) {
-        if (Objects.isNull(alunos)){
-            alunos = new ArrayList<>();
+    public void adicionaAluno(AlunoTurma aluno) {
+        if (Objects.isNull(alunoTurmas)) {
+            alunoTurmas = new ArrayList<>();
         }
-        alunos.add(aluno);
+        alunoTurmas.add(aluno);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void removeAluno(Aluno aluno) {
-        if (Objects.nonNull(alunos)) {
-            alunos.remove(aluno);
+    public void removeAluno(AlunoTurma aluno) {
+        if (nonNull(alunoTurmas)) {
+            alunoTurmas.remove(aluno);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean containsAluno(Aluno aluno) {
+        List<AlunoTurma> obj = AlunoTurma.find(AlunoTurma.class, " turma = ? and aluno = ?", getId().toString(), aluno.getId().toString());
+        return nonNull(obj) && !obj.isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Turma turma = (Turma) o;
+        return Objects.equals(nome, turma.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
     }
 }
