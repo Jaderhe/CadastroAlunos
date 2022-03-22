@@ -30,10 +30,9 @@ public class Turma extends SugarRecord {
     String nome;
     @Builder.Default
     @ToString.Exclude
-    List<Disciplina> disciplinas = new ArrayList<>();
+    List<DisciplinaTurma> disciplinas = new ArrayList<>();
     @Builder.Default
     @ToString.Exclude
-
     List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -52,8 +51,30 @@ public class Turma extends SugarRecord {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+    public void adicionaDisciplina(DisciplinaTurma disciplinaTurma) {
+        if (Objects.isNull(disciplinas)) {
+            disciplinas = new ArrayList<>();
+        }
+        disciplinas.add(disciplinaTurma);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void removeDisciplina(DisciplinaTurma disciplinaTurma) {
+        if (nonNull(disciplinas)) {
+            disciplinas.remove(disciplinaTurma);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean containsAluno(Aluno aluno) {
         List<AlunoTurma> obj = AlunoTurma.find(AlunoTurma.class, " turma = ? and aluno = ?", getId().toString(), aluno.getId().toString());
+        return nonNull(obj) && !obj.isEmpty();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean containsDisciplina(Disciplina disciplina) {
+        List<DisciplinaTurma> obj = DisciplinaTurma.find(DisciplinaTurma.class, " turma = ? and disciplina = ?", getId().toString(), disciplina.getId().toString());
         return nonNull(obj) && !obj.isEmpty();
     }
 

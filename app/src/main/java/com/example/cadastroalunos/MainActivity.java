@@ -44,5 +44,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void moduloDisciplinaTurma(View view) {
+        Intent intent = new Intent(this, CadastroDisciplinaTurmaActivity.class);
+        startActivity(intent);
+    }
+
+    public void moduloNotaAluno(View view) {
+        Intent intent = new Intent(this, CadastroNotaAlunoActivity.class);
+        startActivity(intent);
+    }
+
 
 }

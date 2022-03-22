@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 
 import com.example.cadastroalunos.dao.SugarDAO;
-import com.example.cadastroalunos.model.Aluno;
-import com.example.cadastroalunos.model.AlunoTurma;
+import com.example.cadastroalunos.model.Disciplina;
+import com.example.cadastroalunos.model.DisciplinaTurma;
 import com.example.cadastroalunos.model.Turma;
 import com.example.cadastroalunos.util.Util;
 
@@ -23,21 +23,21 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class CadastroAlunoTurmaActivity extends BaseActivity {
+public class CadastroDisciplinaTurmaActivity extends BaseActivity {
 
     MaterialSpinner spTurma;
     Turma turmaSelecionada;
-    List<AlunoTurma> alunosDaTurmaSelecionada;
-    LinearLayout lnAlunoTurma;
-    LinearLayout lnAlunos;
-    private List<Aluno> alunosDoBanco;
+    List<DisciplinaTurma> disciplinaDaTurmaSelecionada;
+    LinearLayout lnDisciplinaTurma;
+    LinearLayout lnDisciplinas;
+    private List<Disciplina> disciplinasDoBanco;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.AlunoTurmaTitle);
-        setContentView(R.layout.activity_cadastro_aluno_turma);
+        setTitle(R.string.DisciplinaTurmaTitle);
+        setContentView(R.layout.activity_cadastro_disciplina_turma);
         loadComponents();
     }
 
@@ -45,21 +45,21 @@ public class CadastroAlunoTurmaActivity extends BaseActivity {
     @Override
     void loadComponents() {
         spTurma = findViewById(R.id.spTurma);
-        lnAlunoTurma = findViewById(R.id.lnAlunoTurma);
-        lnAlunos = findViewById(R.id.lnAlunos);
+        lnDisciplinaTurma = findViewById(R.id.lnDisciplinaTurma);
+        lnDisciplinas = findViewById(R.id.lnDisciplinaCheckBox);
         List<Turma> turmas = SugarDAO.retornaObjetos(Turma.class, "nome asc");
-        alunosDoBanco = SugarDAO.retornaObjetos(Aluno.class);
+        disciplinasDoBanco = SugarDAO.retornaObjetos(Disciplina.class);
         spTurma.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, turmas));
 
-        criaCheckbox(alunosDoBanco);
+        criaCheckbox(disciplinasDoBanco);
         spTurma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (spTurma.getSelectedItemPosition() != 0) {
                     turmaSelecionada = turmas.get(spTurma.getSelectedItemPosition() - 1);
-                    preencheAlunoTurma();
-                    criaCheckbox(alunosDoBanco);
+                    preencheDisciplinaTurma();
+                    criaCheckbox(disciplinasDoBanco);
                 }
             }
 
@@ -70,54 +70,54 @@ public class CadastroAlunoTurmaActivity extends BaseActivity {
         });
     }
 
-    private void preencheAlunoTurma() {
-        alunosDaTurmaSelecionada = AlunoTurma.find(AlunoTurma.class, " turma = ?", turmaSelecionada.getId().toString());
+    private void preencheDisciplinaTurma() {
+        disciplinaDaTurmaSelecionada = DisciplinaTurma.find(DisciplinaTurma.class, " turma = ?", turmaSelecionada.getId().toString());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void criaCheckbox(List<Aluno> alunos) {
-        lnAlunos.removeAllViews();
-        alunos.forEach(aluno -> {
+    private void criaCheckbox(List<Disciplina> disciplinas) {
+        lnDisciplinas.removeAllViews();
+        disciplinas.forEach(disciplina -> {
             TableRow row = new TableRow(this);
-            row.setId(aluno.getId().intValue());
+            row.setId(disciplina.getId().intValue());
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
             CheckBox checkBox = new CheckBox(this);
             checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
                 if (nonNull(turmaSelecionada)) {
                     if (b) {
-                        turmaSelecionada.adicionaAluno(bucaAlunoTurmaPorAluno(aluno));
+                        turmaSelecionada.adicionaDisciplina(bucaDisciplinaTurmaPorDisciplina(disciplina));
                     } else {
-                        turmaSelecionada.removeAluno(bucaAlunoTurmaPorAluno(aluno));
+                        turmaSelecionada.removeDisciplina(bucaDisciplinaTurmaPorDisciplina(disciplina));
                     }
                 }
             });
             if (nonNull(turmaSelecionada)) {
-                checkBox.setChecked(turmaSelecionada.containsAluno(aluno));
+                checkBox.setChecked(turmaSelecionada.containsDisciplina(disciplina));
             }
-            checkBox.setId(aluno.getId().intValue());
-            checkBox.setText(aluno.getNome());
+            checkBox.setId(disciplina.getId().intValue());
+            checkBox.setText(disciplina.getNome());
             checkBox.setEnabled(nonNull(turmaSelecionada));
             row.addView(checkBox);
-            lnAlunos.addView(row);
+            lnDisciplinas.addView(row);
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private AlunoTurma bucaAlunoTurmaPorAluno(Aluno aluno) {
-        return alunosDaTurmaSelecionada.stream().filter(obj -> obj.getAluno().equals(aluno)).findAny().orElse(criaAlunoTurma(aluno, turmaSelecionada));
+    private DisciplinaTurma bucaDisciplinaTurmaPorDisciplina(Disciplina disciplina) {
+        return disciplinaDaTurmaSelecionada.stream().filter(obj -> obj.getDisciplina().equals(disciplina)).findAny().orElse(criaDisciplinaTurma(disciplina, turmaSelecionada));
     }
 
-    private AlunoTurma criaAlunoTurma(Aluno aluno, Turma turmaSelecionada) {
-        return AlunoTurma.builder().turma(turmaSelecionada).aluno(aluno).build();
+    private DisciplinaTurma criaDisciplinaTurma(Disciplina disciplina, Turma turmaSelecionada) {
+        return DisciplinaTurma.builder().turma(turmaSelecionada).disciplina(disciplina).build();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     void salvar() {
         if (nonNull(turmaSelecionada)) {
-            turmaSelecionada.getAlunoTurmas().forEach(SugarDAO::salvar);
-            alunosDaTurmaSelecionada.stream().filter(obj -> !turmaSelecionada.getAlunoTurmas().contains(obj)).forEach(SugarDAO::delete);
-            preencheAlunoTurma();
-            Util.customSnackBar(lnAlunoTurma, "Alterações salvas com sucesso!", 1);
+            turmaSelecionada.getDisciplinas().forEach(SugarDAO::salvar);
+            disciplinaDaTurmaSelecionada.stream().filter(obj -> !turmaSelecionada.getDisciplinas().contains(obj)).forEach(SugarDAO::delete);
+            preencheDisciplinaTurma();
+            Util.customSnackBar(lnDisciplinaTurma, "Alterações salvas com sucesso!", 1);
 
         }
     }
@@ -127,7 +127,7 @@ public class CadastroAlunoTurmaActivity extends BaseActivity {
     void limparCampos() {
         super.limparCampos();
         turmaSelecionada = null;
-        criaCheckbox(alunosDoBanco);
+        criaCheckbox(disciplinasDoBanco);
         spTurma.setSelection(0);
     }
 }

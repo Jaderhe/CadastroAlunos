@@ -15,5 +15,11 @@ public class Disciplina extends SugarRecord {
     String nome;
     Integer cargaHoraria;
     Professor professor;
-    Turma turma;
+
+    @Override
+    public String toString() {
+        return "Disciplina{" +
+                "nome='" + nome + '\'' +
+                '}';
+    }
 }

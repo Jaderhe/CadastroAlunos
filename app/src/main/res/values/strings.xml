@@ -36,4 +36,10 @@
     <string name="selecioneTurma">Selecione uma Turma</string>
     <string name="Turma">Turma</string>
     <string name="AlunoTurma">Aluno Turma</string>
+    <string name="DisciplinaTurma">Disciplina Turma</string>
+    <string name="DisciplinaTurmaTitle"><![CDATA[Módulo Disciplina -> Turma]]></string>
+    <string name="AlunoTurmaTitle"><![CDATA[Módulo Aluno -> Turma]]></string>
+    <string name="NotaAlunoTitle"><![CDATA[Cadastro Nota -> Aluno]]></string>
+    <string name="selecioneDisciplina">Selecione uma Disciplina</string>
+    <string name="nota">Nota</string>
 </resources>
