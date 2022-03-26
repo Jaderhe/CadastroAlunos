@@ -20,8 +20,6 @@ public class Disciplina extends SugarRecord implements Serializable {
 
     @Override
     public String toString() {
-        return "Disciplina{" +
-                "nome='" + nome + '\'' +
-                '}';
+        return nome;
     }
 }

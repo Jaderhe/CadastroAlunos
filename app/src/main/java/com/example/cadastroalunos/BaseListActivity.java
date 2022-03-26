@@ -22,9 +22,9 @@ public abstract class BaseListActivity extends AppCompatActivity {
 
     private final int activityListXmlId;
     private final int titleXmlId;
-    private RecyclerView.Adapter adapter;
+    protected RecyclerView.Adapter adapter;
     private final int recyclerViewListXmlId;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private LinearLayout linearList;
     private final int linearListXmlId;
     private final String modelName;
@@ -36,15 +36,18 @@ public abstract class BaseListActivity extends AppCompatActivity {
         setTitle(titleXmlId);
         setContentView(activityListXmlId);
         linearList = findViewById(linearListXmlId);
-
+        recyclerView = findViewById(recyclerViewListXmlId);
+        doSomeOnCreate();
         fillList();
+    }
+
+    void doSomeOnCreate() {
     }
 
     abstract RecyclerView.Adapter createAdapter();
 
 
-    public void fillList() {
-        recyclerView = findViewById(recyclerViewListXmlId);
+    void fillList() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
         adapter = createAdapter();
@@ -70,8 +73,10 @@ public abstract class BaseListActivity extends AppCompatActivity {
     }
 
     private void openCreateForm() {
-        Intent intent = new Intent(this, newModelActivity);
-        startActivityForResult(intent, 1);
+        if (newModelActivity != null) {
+            Intent intent = new Intent(this, newModelActivity);
+            startActivityForResult(intent, 1);
+        }
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LancaNotaAlunoActivity extends BaseActivity {
 
@@ -38,6 +39,9 @@ public class LancaNotaAlunoActivity extends BaseActivity {
         notaAluno.getTurma().setId(getIntent().getLongExtra("idTurma", 0L));
         notaAluno.getDisciplina().setId(getIntent().getLongExtra("idDisciplina", 0L));
         notaAluno.setId(getIntent().getLongExtra("idNotaAluno", 0L));
+        if (notaAluno.getId() == 0L) {
+            notaAluno.setId(null);
+        }
         loadComponents();
         edCpfAluno.addTextChangedListener(CpfMask.insert(edCpfAluno));
     }
@@ -75,5 +79,13 @@ public class LancaNotaAlunoActivity extends BaseActivity {
         finish();
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    void validaCamposExtras(AtomicBoolean valido) {
+        if (nonNull(edNotaAluno.getText().toString()) && Long.parseLong(edNotaAluno.getText().toString()) > 100) {
+            edNotaAluno.setError("Nota superior a 100.");
+            edNotaAluno.requestFocus();
+            valido.set(false);
+        }
+    }
 }

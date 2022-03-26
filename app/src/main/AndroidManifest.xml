@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CadastroAlunos">
         <activity
+            android:name=".ListaResultadoActivity"
+            android:exported="false" />
+        <activity
             android:name=".PresencaAlunoActivity"
             android:exported="false" />
         <activity

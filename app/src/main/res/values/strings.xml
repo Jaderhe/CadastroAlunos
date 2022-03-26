@@ -48,4 +48,5 @@
     <string name="RegimeTurma">Regime da Turma</string>
     <string name="PresencaAluno">Presenças de Alunos</string>
     <string name="Data">Data</string>
+    <string name="ResultadoTitle">Resultado Final</string>
 </resources>

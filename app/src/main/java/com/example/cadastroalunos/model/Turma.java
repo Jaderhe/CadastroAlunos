@@ -24,17 +24,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString
 @Builder
 public class Turma extends SugarRecord implements Serializable {
 
     String nome;
     RegimeTurma regimeTurma;
     @Builder.Default
-    @ToString.Exclude
     List<DisciplinaTurma> disciplinas = new ArrayList<>();
     @Builder.Default
-    @ToString.Exclude
     List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -91,5 +88,10 @@ public class Turma extends SugarRecord implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(nome);
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

@@ -39,4 +39,9 @@ public class Aluno extends SugarRecord implements Serializable {
     public int hashCode() {
         return Objects.hash(ra, nome, cpf, dtNasc, dtMatricula, curso, periodo);
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
