@@ -3,72 +3,74 @@ package com.example.cadastroalunos;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-import android.content.Intent;
+import androidx.annotation.RequiresApi;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.TableRow;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.cadastroalunos.adapters.NotaAlunoAdapter;
 import com.example.cadastroalunos.dao.SugarDAO;
-import com.example.cadastroalunos.listeners.RecyclerItemClickListener;
 import com.example.cadastroalunos.model.AlunoTurma;
 import com.example.cadastroalunos.model.Disciplina;
 import com.example.cadastroalunos.model.DisciplinaTurma;
 import com.example.cadastroalunos.model.NotaAluno;
+import com.example.cadastroalunos.model.PresencaAluno;
 import com.example.cadastroalunos.model.Turma;
+import com.example.cadastroalunos.util.Util;
+import com.google.android.material.textfield.TextInputEditText;
+import com.orm.SugarRecord;
 
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnClickListener {
-    private RecyclerView rvListaAlunos;
-    private LinearLayout lnNotaAluno;
-    private RadioGroup rgRegimeTurma;
+public class PresencaAlunoActivity extends BaseActivity {
     MaterialSpinner spTurma;
     MaterialSpinner spDisciplina;
     Turma turmaSelecionada;
     Disciplina disciplinaSelecionada;
-    int regimeSelecionado;
+    LinearLayout lnAlunos;
+    LinearLayout lnPresencas;
     List<Disciplina> disciplinaTurmas = new ArrayList<>();
-    private List<NotaAluno> listaAlunos;
+    private TextInputEditText edDataPresenca;
+    private List<PresencaAluno> listaAlunos;
+    private int vAno;
+    private int vMes;
+    private int vDia;
+    private View dataSelecionada;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.NotaAlunoTitle);
-        setContentView(R.layout.activity_cadastro_nota_aluno);
+        setTitle(R.string.PresencaAluno);
+        setContentView(R.layout.activity_presenca_aluno);
         loadComponents();
+        setDataAtual();
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     void loadComponents() {
-        lnNotaAluno = findViewById(R.id.lnNotaAluno);
-        rvListaAlunos = findViewById(R.id.rvListaAlunos);
         spTurma = findViewById(R.id.spTurma);
-        rgRegimeTurma = findViewById(R.id.rgRegimeTurma);
         spDisciplina = findViewById(R.id.spDisciplina);
+        lnAlunos = findViewById(R.id.lnAlunos);
+        lnPresencas = findViewById(R.id.lnPresencas);
+        edDataPresenca = findViewById(R.id.edDataPresenca);
         List<Turma> turmas = SugarDAO.retornaObjetos(Turma.class, "nome asc");
         spTurma.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, turmas));
@@ -88,6 +90,7 @@ public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnCl
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             if (spDisciplina.getSelectedItemPosition() != 0) {
                                 disciplinaSelecionada = disciplinaTurmas.get(spDisciplina.getSelectedItemPosition() - 1);
+                                criarCheckbox();
                             }
                         }
 
@@ -96,7 +99,7 @@ public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnCl
                             disciplinaSelecionada = null;
                         }
                     });
-                    criarRadioButtons(turmaSelecionada);
+                    criarCheckbox();
                 }
             }
 
@@ -106,89 +109,64 @@ public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnCl
                 turmaSelecionada = null;
             }
         });
+        edDataPresenca.setFocusable(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void criarRadioButtons(Turma turmaSelecionada) {
-        rgRegimeTurma.removeAllViews();
-        IntStream.range(1, turmaSelecionada.getRegimeTurma().getQtdBimestres() + 1).forEach(i -> {
-            RadioButton rdbtn = new RadioButton(this);
-            rdbtn.setId(View.generateViewId());
-            rdbtn.setText(String.valueOf(i));
-            rdbtn.setOnClickListener(view -> {
-                regimeSelecionado = i;
-                criaListaAlunos();
+    private void criarCheckbox() {
+        listaAlunos = criaPresencaAluno();
+        if (nonNull(listaAlunos) && nonNull(edDataPresenca.getText().toString()) && !edDataPresenca.getText().toString().isEmpty()) {
+            lnAlunos.removeAllViews();
+            listaAlunos.forEach(aluno -> {
+                TableRow row = new TableRow(this);
+                row.setId(View.generateViewId());
+                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+                    aluno.setPresente(b);
+                });
+                checkBox.setChecked(aluno.isPresente());
+                checkBox.setId(View.generateViewId());
+                checkBox.setText(aluno.getAluno().getNome());
+                row.addView(checkBox);
+                lnAlunos.addView(row);
             });
-            rgRegimeTurma.addView(rdbtn);
-        });
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void criaListaAlunos() {
-        listaAlunos = criaNotaAluno();
-        NotaAlunoAdapter adapter = new NotaAlunoAdapter(listaAlunos, this);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        Intent intentLancaNota = new Intent(this, LancaNotaAlunoActivity.class);
-        rvListaAlunos.setLayoutManager(llm);
-
-        rvListaAlunos.setAdapter(adapter);
-        rvListaAlunos.addOnItemTouchListener(new RecyclerItemClickListener(this, rvListaAlunos, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                NotaAluno notaAlunoSelecionado = listaAlunos.get(position);
-                intentLancaNota.putExtra("notaAluno", notaAlunoSelecionado);
-                intentLancaNota.putExtra("idAluno", notaAlunoSelecionado.getAluno().getId());
-                intentLancaNota.putExtra("idTurma", notaAlunoSelecionado.getTurma().getId());
-                intentLancaNota.putExtra("idDisciplina", disciplinaSelecionada.getId());
-                intentLancaNota.putExtra("idNotaAluno", notaAlunoSelecionado.getId());
-                startActivity(intentLancaNota);
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onResume() {
-        super.onResume();
-        criaListaAlunos();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private List<NotaAluno> criaNotaAluno() {
-        if (nonNull(turmaSelecionada))
+    private List<PresencaAluno> criaPresencaAluno() {
+        if (nonNull(turmaSelecionada) && nonNull(disciplinaSelecionada) && !edDataPresenca.getText().toString().isEmpty())
             return AlunoTurma.find(AlunoTurma.class, " turma = ?", turmaSelecionada.getId().toString()).stream()
                     .map(alunoTurma -> {
-                        List<NotaAluno> alunos = NotaAluno.find(
-                                NotaAluno.class, " aluno = ? and turma = ? and disciplina = ? and bimestre = ? ",
+                        List<PresencaAluno> alunos = PresencaAluno.find(
+                                PresencaAluno.class, " aluno = ? and turma = ? and disciplina = ? and data = ?",
                                 alunoTurma.getAluno().getId().toString(),
                                 alunoTurma.getTurma().getId().toString(),
                                 disciplinaSelecionada.getId().toString(),
-                                String.valueOf(regimeSelecionado));
+                                edDataPresenca.getText().toString()
+                        );
                         if (!alunos.isEmpty()) {
                             return alunos.get(0);
                         }
-                        return NotaAluno.builder()
+                        return PresencaAluno.builder()
                                 .with(alunoTurma)
                                 .disciplina(disciplinaSelecionada)
-                                .bimestre(regimeSelecionado)
+                                .data(edDataPresenca.getText().toString())
                                 .build();
                     }).collect(Collectors.toList());
         return Collections.emptyList();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     void salvar() {
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
+        listaAlunos.forEach(presencaAluno -> {
+            presencaAluno.setData(edDataPresenca.getText().toString());
+            SugarDAO.salvar(presencaAluno);
+        });
+        Util.customSnackBar(lnPresencas, "Alterações salvas com sucesso!", 1);
+        criarCheckbox();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -196,12 +174,54 @@ public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnCl
     void limparCampos() {
         spTurma.setSelection(0);
         spDisciplina.setSelection(0);
-        rgRegimeTurma.removeAllViews();
         turmaSelecionada = null;
         disciplinaSelecionada = null;
-        regimeSelecionado = 0;
         listaAlunos = new ArrayList<>();
-        criaListaAlunos();
+        lnAlunos.removeAllViews();
+        edDataPresenca.setText("");
+    }
+
+    public void selecionarData(View view) {
+        dataSelecionada = view;
+        showDialog(0);
+    }
+
+
+    private DatePickerDialog.OnDateSetListener setDatePicker =
+            new DatePickerDialog.OnDateSetListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    vAno = year;
+                    vMes = month;
+                    vDia = day;
+
+                    atualizaData();
+                }
+            };
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void atualizaData() {
+        TextInputEditText edit = (TextInputEditText) dataSelecionada;
+        edit.setText(new StringBuilder().append(vDia).append("/")
+                .append(vMes + 1).append("/")
+                .append(vAno));
+
+        criarCheckbox();
+    }
+
+    private void setDataAtual() {
+        Calendar calendar = Calendar.getInstance();
+        vDia = calendar.get(Calendar.DAY_OF_MONTH);
+        vMes = calendar.get(Calendar.MONTH);
+        vAno = calendar.get(Calendar.YEAR);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        setDataAtual();
+        return new DatePickerDialog(this, setDatePicker,
+                vAno, vMes, vDia);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -217,8 +237,9 @@ public class CadastroNotaAlunoActivity extends BaseActivity implements View.OnCl
             spTurma.requestFocus();
             valido.set(false);
         }
-        if (regimeSelecionado == 0) {
-            rgRegimeTurma.requestFocus();
+        if (isNull(edDataPresenca.getText().toString()) || edDataPresenca.getText().toString().isEmpty()) {
+            edDataPresenca.setError("Selecione uma Data");
+            edDataPresenca.requestFocus();
             valido.set(false);
         }
     }

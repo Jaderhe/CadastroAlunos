@@ -34,7 +34,6 @@ public class CadastroDisciplinaActivity extends BaseActivity {
         setTitle(R.string.CadDisciplinaTitle);
         setContentView(R.layout.activity_cadastro_disciplina);
         loadComponents();
-        edCargaHorariaDisciplina.addTextChangedListener(CpfMask.insert(edCargaHorariaDisciplina));
     }
 
 

@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import com.example.cadastroalunos.dao.SugarDAO;
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,9 +26,10 @@ import lombok.ToString;
 @Data
 @ToString
 @Builder
-public class Turma extends SugarRecord {
+public class Turma extends SugarRecord implements Serializable {
 
     String nome;
+    RegimeTurma regimeTurma;
     @Builder.Default
     @ToString.Exclude
     List<DisciplinaTurma> disciplinas = new ArrayList<>();

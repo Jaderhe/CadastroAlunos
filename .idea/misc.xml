@@ -12,14 +12,16 @@
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_cadastro_disciplina_turma.xml" value="0.1734375" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_cadastro_professor.xml" value="0.10989583333333333" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_cadastro_turma.xml" value="0.18541666666666667" />
+        <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_lanca_nota_aluno.xml" value="0.3625" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_lista_aluno.xml" value="0.1" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_lista_disciplinas.xml" value="0.15081521739130435" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_lista_professor.xml" value="0.1" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_lista_turma.xml" value="0.2520833333333333" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_main.xml" value="0.46709916589434664" />
+        <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/activity_presenca_aluno.xml" value="0.35833333333333334" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_aluno.xml" value="0.25" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_disciplina.xml" value="0.2520833333333333" />
-        <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_nota_aluno.xml" value="0.1734375" />
+        <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_nota_aluno.xml" value="0.5" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_professor.xml" value="0.22826086956521738" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/layout/card_view_turma.xml" value="0.2520833333333333" />
         <entry key="..\:/projetos/CadastroAlunos/app/src/main/res/menu/menu_cadastro.xml" value="0.25" />

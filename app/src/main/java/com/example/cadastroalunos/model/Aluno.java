@@ -2,6 +2,7 @@ package com.example.cadastroalunos.model;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 @Builder
-public class Aluno extends SugarRecord {
+public class Aluno extends SugarRecord implements Serializable {
 
     int ra;
     String nome;

@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lnNotaAluno"
+    android:id="@+id/lnPresencas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CadastroNotaAlunoActivity">
+    tools:context=".PresencaAlunoActivity">
 
     <fr.ganfra.materialspinner.MaterialSpinner
         android:id="@+id/spTurma"
@@ -27,19 +27,26 @@
         app:ms_arrowColor="?attr/colorPrimary"
         app:ms_floatingLabelText="@string/disciplina"
         app:ms_hint="@string/selecioneDisciplina"
-
         app:ms_multiline="false" />
 
-    <RadioGroup
-        android:id="@+id/rgRegimeTurma"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:tooltipText="@string/RegimeTurma" />
+        android:focusable="false"
+        android:hint="@string/Data">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvListaAlunos"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edDataPresenca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:onClick="selecionarData" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/lnAlunos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:orientation="vertical" />
 </LinearLayout>

@@ -34,8 +34,6 @@ public class NotaAlunoAdapter extends RecyclerView.Adapter<NotaAlunoAdapter.Alun
         TextInputEditText edNomeAluno;
         TextInputEditText edCpfAluno;
         TextInputEditText edNotaAluno;
-        MaterialButton btnSalvar;
-        NotaAluno notaAlunoSelecionado;
 
         public AlunoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -44,13 +42,6 @@ public class NotaAlunoAdapter extends RecyclerView.Adapter<NotaAlunoAdapter.Alun
             edNomeAluno = itemView.findViewById(R.id.edNomeAluno);
             edCpfAluno = itemView.findViewById(R.id.edCpfAluno);
             edNotaAluno = itemView.findViewById(R.id.edNotaAluno);
-            btnSalvar = itemView.findViewById(R.id.btnSalvar);
-            btnSalvar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
     }
 
@@ -83,6 +74,4 @@ public class NotaAlunoAdapter extends RecyclerView.Adapter<NotaAlunoAdapter.Alun
         return listaAlunos.size();
     }
 
-    public void salvarNotaAluno() {
-    }
 }

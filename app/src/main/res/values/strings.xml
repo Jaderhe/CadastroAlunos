@@ -42,4 +42,10 @@
     <string name="NotaAlunoTitle"><![CDATA[Cadastro Nota -> Aluno]]></string>
     <string name="selecioneDisciplina">Selecione uma Disciplina</string>
     <string name="nota">Nota</string>
+    <string name="Semestral">Semestral</string>
+    <string name="Anual">Anual</string>
+    <string name="LancarNota">Lançar Nota</string>
+    <string name="RegimeTurma">Regime da Turma</string>
+    <string name="PresencaAluno">Presenças de Alunos</string>
+    <string name="Data">Data</string>
 </resources>

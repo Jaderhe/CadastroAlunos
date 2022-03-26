@@ -3,6 +3,7 @@ package com.example.cadastroalunos.model;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,16 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class NotaAluno extends SugarRecord implements Serializable {
+public class PresencaAluno extends SugarRecord implements Serializable {
     Aluno aluno;
     Disciplina disciplina;
     Turma turma;
-    Integer bimestre;
-    Float nota;
+    String data;
+    boolean presente;
 
-    public static class NotaAlunoBuilder {
+    public static class PresencaAlunoBuilder {
 
-        public NotaAlunoBuilder with(AlunoTurma alunoTurma) {
+        public PresencaAlunoBuilder with(AlunoTurma alunoTurma) {
             return this.aluno(alunoTurma.getAluno()).turma(alunoTurma.getTurma());
         }
     }

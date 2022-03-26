@@ -193,11 +193,9 @@ public class CadastroAlunoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mn_limpar:
-                //TODO: adicionar método  de limpar dados
                 limparCampos();
                 return true;
             case R.id.mn_salvar:
-                //TODO: adicionar método  de salvar dados
                 validaCampos();
                 limparCampos();
                 return true;

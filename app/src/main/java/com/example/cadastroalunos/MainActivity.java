@@ -54,5 +54,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void moduloPresencaAluno(View view) {
+        Intent intent = new Intent(this, PresencaAlunoActivity.class);
+        startActivity(intent);
+    }
+
 
 }
